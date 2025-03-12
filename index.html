@@ -3,22 +3,22 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-		<meta name="description" content="Play minecraft 1.12 in your browser" />
+		<meta name="description" content="Play Minecraft 1.12 in your browser" />
 		<meta name="keywords" content="eaglercraft, minecraft, 1.12, 1.12.2" />
 		<title>Eaglercraft 1.12 WASM-GC</title>
 		<meta property="og:locale" content="en-US" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="Eaglercraft 1.12 WASM" />
-		<meta property="og:description" content="Play minecraft 1.12 in your browser" />
+		<meta property="og:description" content="Play Minecraft 1.12 in your browser" />
 		<meta property="og:image" content="favicon.png" />
 		<link type="image/png" rel="shortcut icon" href="favicon.png" />
 		<script type="text/javascript" src="bootstrap.js"></script>
 		<script type="text/javascript">
 			"use strict";
 			window.addEventListener("load", function() {
-				if(window.location.href.indexOf("file:") === 0) {
+				if (window.location.href.indexOf("file:") === 0) {
 					alert("HTTP please, do not open this file locally, run a local HTTP server and load it via HTTP");
-				}else {
+				} else {
 					
 					// %%%%%%%%% launch options %%%%%%%%%%%%
 					
@@ -28,9 +28,7 @@
 						container: "game_frame",
 						assetsURI: "assets.epw",
 						worldsDB: "worlds",
-						servers: [
-							/* example: { addr: "ws://localhost:8081/", name: "Local test server" } */
-						],
+						servers: [],
 						relays: [
 							{ addr: "wss://relay.deev.is/", comment: "lax1dude relay #1", primary: relayId == 0 },
 							{ addr: "wss://relay.lax1dude.net/", comment: "lax1dude relay #2", primary: relayId == 1 },
@@ -41,14 +39,18 @@
 					// %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 					
 					var q = window.location.search;
-					if((typeof q === "string") && q[0] === "?" && (typeof window.URLSearchParams !== "undefined")) {
+					if ((typeof q === "string") && q[0] === "?" && (typeof window.URLSearchParams !== "undefined")) {
 						q = new window.URLSearchParams(q);
 						var s = q.get("server");
-						if(s) window.eaglercraftXOpts.joinServer = s;
+						if (s) window.eaglercraftXOpts.joinServer = s;
 					}
 					
 					main();
-					
+
+					// Auto-enable JSPI
+					if (window.eaglercraftXInit) {
+						window.eaglercraftXInit();
+					}
 				}
 			});
 		</script>
